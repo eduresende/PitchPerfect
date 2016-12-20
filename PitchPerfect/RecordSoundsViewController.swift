@@ -19,21 +19,11 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-    }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
         toggleRecord(allow: true)
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     @IBAction func recordAudio(_ sender: UIButton) {
-        recordingLabel.text = "Recording in progress"
         toggleRecord(allow: false)
 
         let dirPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
@@ -52,7 +42,6 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     }
 
     @IBAction func stopRecording(_ sender: UIButton) {
-        recordingLabel.text = "Tap to record"
         toggleRecord(allow: true)
 
         audioRecorder.stop()
@@ -63,6 +52,7 @@ class RecordSoundsViewController: UIViewController, AVAudioRecorderDelegate {
     func toggleRecord(allow: Bool) {
         recordButton.isEnabled = allow
         stopButton.isEnabled = !allow
+        recordingLabel.text = allow ? "Tap to record" : "Recording in progress"
     }
 
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
